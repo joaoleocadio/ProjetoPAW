@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const UserSchema = new mongoose.Schema({
+const ProdutoSchema = new mongoose.Schema({
 
     id: {
         type: Number,
@@ -17,16 +17,14 @@ const UserSchema = new mongoose.Schema({
     preco: {
         type: Number,
         required: true
-    },    
-    /*
-    role: {
+    }, 
+    descricao: {
         type: String,
-        enum: ['ADMIN', 'COMERCIANTE', 'CLIENTE', 'EXT'],
-        default: 'EXT',
-        index: true
+        required: true
     },
-    updated_at: { type: Date, default: Date.now }*/
+    
+    updated_at: { type: Date, default: Date.now }
 
 })
 
-module.exports = mongoose.model('Produto', UserSchema)
+module.exports = mongoose.model('Produto', ProdutoSchema)

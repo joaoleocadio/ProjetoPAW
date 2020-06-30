@@ -13,9 +13,11 @@ const UserSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		unique: true,
-        require: true
+        required: true
     },    
-    address: String,
+    address: {
+        type: String
+    },    
     age: Number,
     email: { 
         type: String,
@@ -24,13 +26,14 @@ const UserSchema = new mongoose.Schema({
     },
     password: { type: String, required: true },
     phoneNumber: Number,
-    idCard: { type: String, unique: true, required: true },
+    id: { type: String, unique: true, required: true },
     role: {
         type: String,
-        enum: ['ADMIN', 'COMERCIANTE', 'CLIENTE', 'EXT'],
-        default: 'EXT',
+        enum: ['ADMIN', 'COMERCIANTE', 'CLIENTE'],
+        default: 'CLIENTE',
         index: true
     },
+    encomenda: {type: mongoose.Schema.Types.ObjectId, ref: 'Encomenda'},
     updated_at: { type: Date, default: Date.now }
 
 })
