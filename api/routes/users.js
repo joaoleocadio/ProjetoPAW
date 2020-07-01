@@ -4,21 +4,23 @@ var User = require("../controllers/UserController")
 const authorize = require('../middleware/authorize')
 
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+//List user Cliente -> Testado no Postman
+router.get('/userList', function(req, res, next) {
+  User.listUser(req, res)
 });
 
-//Create user
-router.post('/create', authorize(['CLIENTE']), function (req, res) {
+//Create user -> Testado no Postman
+router.post('/create', function (req, res) {
   User.createUser(req, res)
 })
 
-router.delete('/:id', authorize(['CLIENTE']), function (req, res) {
+//Delete user -> Testado no Postman (não é pedido)
+router.delete('/:id', function (req, res) {
   User.deleteUser(req, res)
 })
 
-router.put('/:id', authorize(['CLIENTE']), function (req, res) {
+//Update user -> Testado no Postman
+router.put('/:id', function (req, res) {
   User.updateUser(req, res)
 })
 
