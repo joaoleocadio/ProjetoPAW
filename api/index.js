@@ -1,6 +1,7 @@
 const express = require('express')
 const apiRouter = express.Router()
 const sessionRouter = require('./routes/Session')
+const comercRouter = require('./routes/ComercRoutes')
 
 apiRouter.get('/', (req, res) => {
   res.send({
@@ -9,5 +10,6 @@ apiRouter.get('/', (req, res) => {
 })
 
 apiRouter.use(sessionRouter)
+apiRouter.use("/comerc", comercRouter)
 
 module.exports = apiRouter

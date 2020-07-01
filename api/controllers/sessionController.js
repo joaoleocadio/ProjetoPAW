@@ -54,7 +54,6 @@ const me = (req, res) => {
     if (req.sessionUser) {
         res.json(req.sessionUser)
     } else {
-        console.log("aqui!!")
         res.status(401)
         res.json(null)
     }
