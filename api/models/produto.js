@@ -4,14 +4,15 @@ const ProdutoSchema = new mongoose.Schema({
 
     id: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     nome: {
 		type: String,
 		required: true
 	},
     quantidade: {
-		type: number,
+		type: Number,
 		required: true
 	},  
     preco: {
@@ -23,6 +24,7 @@ const ProdutoSchema = new mongoose.Schema({
         required: true
     },
     
+    //user: { type: mongoose.Schema.Types.ObjectId, ref: 'Utilizador' },
     updated_at: { type: Date, default: Date.now }
 
 })

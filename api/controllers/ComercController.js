@@ -48,7 +48,7 @@ ComercController.createUserComerc = async (req, res) => {
 
             res.json(result);
         } else {
-            console.log("User is technical by default"); //Alterar
+            console.log("Utilizador é um cliente!"); //Alterar
             res.send()
         }
 

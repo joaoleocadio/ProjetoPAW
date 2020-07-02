@@ -6,6 +6,7 @@ const apiRouter = require('./api')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require('./api/models/utilizador')
+const Produto = require('./api/models/produto')
 const bcrypt = require('bcrypt');
 const sessionMiddleware = require('./api/middleware/session')
 
