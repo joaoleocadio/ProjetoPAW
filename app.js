@@ -10,6 +10,9 @@ const Produto = require('./api/models/produto')
 const bcrypt = require('bcrypt');
 const sessionMiddleware = require('./api/middleware/session')
 
+var swaggerUi = require('swagger-ui-express')
+var swaggerDocument = require('./swagger.json')
+
 
 const app = express();
 
@@ -66,9 +69,12 @@ app.use(cookieParser())
 app.use(sessionMiddleware)
 
 app.use('/api', cors(), apiRouter)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
 
 // Start the server
-app.listen(process.env.PORT || 5000, () =>
+app.listen(process.env.PORT || 5000, () => {
     console.log(`Example app listening at http://localhost:3000/api/`)
-)
+    console.log(`API started on http://localhost:3000/api-docs`)
+})
 

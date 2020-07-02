@@ -17,7 +17,7 @@ ProdutoController.createProduto = async (req, res) => {
 
         const info = await Produto.findOne({ _id: produto._id }).populate('utilizador', ['username', 'id', 'email'])
 
-        res.json(result);
+        res.json(info);
     } catch (error) {
         console.log(error)
     }
