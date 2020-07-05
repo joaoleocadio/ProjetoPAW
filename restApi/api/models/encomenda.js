@@ -20,6 +20,7 @@ const EncomendaSchema = new mongoose.Schema({
     address: {type: String, required: true},
     info: {type: String},
     observacoes: {type: String},
+    reclamacao: {type: mongoose.Schema.Types.ObjectId, ref: 'Reclamacao' },
     updated_at: { type: Date, default: Date.now }
 })
 

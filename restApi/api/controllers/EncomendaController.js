@@ -61,7 +61,7 @@ EncomendaController.createEncomenda = async (req, res) => {
 
 EncomendaController.listEncomendas = async (req, res) => {
     try {
-        const lista = await Encomenda.find().populate('produtos.produto').populate('user', ['username', 'id', 'email'])
+        const lista = await Encomenda.find({user: req.params.id}).populate('produtos.produto').populate('user', ['username', 'id', 'email'])
         res.json(lista);
     } catch (err) {
         console.log(err)

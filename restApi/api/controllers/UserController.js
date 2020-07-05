@@ -19,15 +19,16 @@ var transporter = nodemailer.createTransport({
 });
 
 UserController.createUser = async (req, res) => {
+
     try {
-        if (req.body.role == null) {
+        
+        if (req.body.role != null && req.body.role != "ADMIN") {
 
             const encryptedPass = bcrypt.hashSync(req.body.password, 10);
             const newData =
             {
                 ...req.body,
                 password: encryptedPass,
-                role: "CLIENTE"
             }
             const result = await User.create(newData);
 
@@ -49,8 +50,7 @@ UserController.createUser = async (req, res) => {
 
             res.json(result);
         } else {
-            console.log("User is technical by default"); //Alterar
-            res.send()
+            res.status(401).json({ message: "Role Inválida!" });
         }
 
 
@@ -63,7 +63,7 @@ UserController.createUser = async (req, res) => {
 
 UserController.deleteUser = async (req, res) => {
     try {
-        const user = await User.findOne({ id: req.params.id })
+        const user = await User.findOne({ _id: req.params.id })
         if (user.role === "CLIENTE") {
             await user.remove()
             res.json(user)

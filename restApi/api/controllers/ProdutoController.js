@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
 const User = require('../models/produto')
 const Produto = require('../models/produto');
-const authorize = require('../middleware/authorize')
+const authorize = require('../middleware/authorize');
+const produto = require("../models/produto");
 
 var ProdutoController = {};
 
@@ -13,6 +14,7 @@ ProdutoController.createProduto = async (req, res) => {
         }
 
         const produto = await Produto.create(newData)
+
         await User.findOneAndUpdate({_id: req.params.id, role: "COMERCIANTE"}, { $push: { produto: Produto._id}})
 
         const info = await Produto.findOne({ _id: produto._id }).populate('utilizador', ['username', 'id', 'email'])
@@ -41,6 +43,16 @@ ProdutoController.deleteProduto = async (req, res) => {
         res.json(produto)
     } catch (err) {
         console.log(err)
+    }
+}
+
+ProdutoController.listProduto = async (req, res) => {
+    try {
+        const list = await User.find({ role: "COMERCIANTE" })
+        const lista = await Produto.find().populate('user', ['username', 'id', 'email'])
+        res.json(lista);
+    } catch (error) {
+        console.log(error)
     }
 }
 

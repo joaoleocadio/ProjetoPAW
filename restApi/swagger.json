@@ -1,0 +1,183 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "API de apoio alimentar destinada a pessoas em quarentena",
+        "description": "API que regista utilizadores e gere as suas encomendas - Efetuar login para usar a API"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "Encomenda",
+            "description": "Rotas para gestao de encomendas"
+        },
+        {
+            "name": "Autenticação",
+            "description": "Rotas de Autenticação"
+        },
+        {
+            "name": "Comerciantes",
+            "description": "Rotas para manipulação/gestão de utilizadores do tipo comerciantes"
+        },
+        {
+            "name": "Clientes",
+            "description": "Rotas para manipulação/gestão de utilizadores Clientes"
+        },
+        {
+            "name": "Admin",
+            "description": "Rotas para manipulação/gestão do Admin"
+        },
+        {
+            "name": "Produto",
+            "description": "Rotas para manipulação/gestão de Produtos"
+        },
+        {
+            "name": "Reclamações",
+            "description": "Rotas para manipulação/gestão de Reclamações"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Efetuar login",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Credenciais",
+                        "description": "Credenciais de Login",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema": {
+                            "$ref": "#/definitions/Utilizador"
+                        }
+                    },
+                    "400": {
+                        "description": "Login Failed"
+                    }
+                }
+            }
+        }
+    },  
+    "/logout": {
+        "post": {
+            "tags": [
+                "Autenticação"
+            ],
+            "summary": "Efetuar Logout",
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "Logout success"
+                },
+                "401": {
+                    "description": "Logout Failed"
+                }
+            }
+        }
+    },
+    "/me": {
+        "get": {
+            "tags": [
+                "Autenticação"
+            ],
+            "summary": "Obter utilizador que fez login",
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "success",
+                    "schema": {
+                        "$ref": "#/definitions/Utilizador"
+                    }
+                },
+                "401": {
+                    "description": "Failed"
+                }
+            }
+        }
+    },  
+    "definitions": {
+        "Utilizador": {
+            "required": [
+                "firstname",
+                "lastname",
+                "email",
+                "password",
+                "id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "firstname": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string",
+                    "unique": true
+                },
+                "address": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "number"
+                },
+                "email": {
+                    "type": "string",
+                    "unique": "true"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phoneNumber": {
+                    "type": "number"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date",
+                    "default": "Date.now"
+                }
+            }
+        }
+    }    
+}

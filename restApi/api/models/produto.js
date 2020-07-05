@@ -23,8 +23,7 @@ const ProdutoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    
-    //user: { type: mongoose.Schema.Types.ObjectId, ref: 'Utilizador' },
+    vendedor: { type: mongoose.Schema.Types.ObjectId, ref: 'Utilizador' },
     updated_at: { type: Date, default: Date.now }
 
 })

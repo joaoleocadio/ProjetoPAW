@@ -9,8 +9,8 @@ router.post('/create/:id', function (req, res) {
     Encomenda.createEncomenda(req, res)
 })
 
-//list all users in role Comerciante -> Testado no Postman
-router.get('/ListaEncomendas', function (req, res) {
+//list all encomendas -> Testado no Postman
+router.get('/ListaEncomendas/:id', function (req, res) {
     Encomenda.listEncomendas(req, res)
 })
 

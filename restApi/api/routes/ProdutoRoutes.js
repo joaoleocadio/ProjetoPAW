@@ -6,7 +6,7 @@ const authorize = require("../middleware/authorize")
 
 
 //Criar Produto -> Testado no Postman
-router.post('/create', function (req, res) {
+router.post('/create/:id', function (req, res) {
     Produto.createProduto(req, res)
 })
 
@@ -19,5 +19,9 @@ router.put('/:id', function (req, res) {
 router.delete('/:id', function (req, res) {
     Produto.deleteProduto(req, res)
 })
+
+router.get('/ProdutoList', function(req, res, next) {
+    User.listUser(req, res)
+});
 
 module.exports = router;

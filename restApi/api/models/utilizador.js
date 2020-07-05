@@ -26,14 +26,14 @@ const UserSchema = new mongoose.Schema({
     },
     password: { type: String, required: true },
     phoneNumber: Number,
-    id: { type: String, unique: true, required: true },
+    //id: { type: String, unique: true, required: true },
     role: {
         type: String,
         enum: ['ADMIN', 'COMERCIANTE', 'CLIENTE'],
         default: 'CLIENTE',
         index: true
     },
-    encomenda: {type: mongoose.Schema.Types.ObjectId, ref: 'Encomenda'},
+    encomenda: [{type: mongoose.Schema.Types.ObjectId, ref: 'Encomenda'}],
     updated_at: { type: Date, default: Date.now }
 
 })

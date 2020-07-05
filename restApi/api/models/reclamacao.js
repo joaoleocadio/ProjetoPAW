@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 const ReclamacaoSchema = new mongoose.Schema({
 
-    id: {
-        type: Number,
-        required: true
-    },
     titulo: {
 		type: String,
 		required: true
