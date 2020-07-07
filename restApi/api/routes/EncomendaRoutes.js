@@ -5,17 +5,17 @@ const authorize = require("../middleware/authorize")
 
 
 //Criar Produto -> Testado no Postman
-router.post('/create/:id', function (req, res) {
+router.post('/create/:id',authorize(['CLIENTE']), function (req, res) {
     Encomenda.createEncomenda(req, res)
 })
 
 //list all encomendas -> Testado no Postman
-router.get('/ListaEncomendas/:id', function (req, res) {
+router.get('/ListaEncomendas/:id', authorize(['ADMIN', 'COMERCIANTE', 'CLIENTE']),function (req, res) {
     Encomenda.listEncomendas(req, res)
 })
 
 //Verificar estado da encomenda -> Testado no Postman
-router.get('/consultar/:id', function (req, res) {
+router.get('/consultar/:id', authorize(['ADMIN', 'COMERCIANTE', 'CLIENTE']), function (req, res) {
     Encomenda.getEstado(req, res)
 })
 

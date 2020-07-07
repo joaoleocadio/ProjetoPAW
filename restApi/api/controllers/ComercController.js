@@ -19,7 +19,7 @@ var transporter = nodemailer.createTransport({
 //Criar um utilizador -> Comerciante (admin)
 ComercController.createUserComerc = async (req, res) => {
     try {
-        if (req.body.role == null) {
+        if (req.body.role != null && req.body.role != "ADMIN") {
 
             const encryptedPass = bcrypt.hashSync(req.body.password, 10);
             const newData =
@@ -48,8 +48,8 @@ ComercController.createUserComerc = async (req, res) => {
 
             res.json(result);
         } else {
-            console.log("Utilizador é um cliente!"); //Alterar
-            res.send()
+            console.log("Utilizador é um cliente!");
+            res.status(401).json({ message: "Role Inválida!" });
         }
 
 

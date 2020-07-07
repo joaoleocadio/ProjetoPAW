@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 const Reclamacao = require("../models/reclamacao")
-const authorize = require('../middleware/authorize')
+const Encomenda = require("../models/encomenda")
+const authorize = require('../middleware/authorize');
 
 var ReclamacaoController = {};
 
@@ -10,12 +11,11 @@ ReclamacaoController.createReclamacao = async (req, res) => {
         const newData = {
             ...req.body,
         }
-
+        
         const reclamacao = await Reclamacao.create(newData)
         await Reclamacao.findOneAndUpdate({_id: req.params.id, role: "COMERCIANTE"}, { $push: { reclamacao: Reclamacao._id}})
-
+        const encomenda = await Encomenda.findOneAndUpdate({_id: req.params.id}, { reclamacao: reclamacao._id})
         const info = await Reclamacao.findOne({ _id: reclamacao._id }).populate('utilizador', ['username', 'id', 'email'])
-
         res.json(info);
     } catch (error) {
         console.log(error)
@@ -27,7 +27,7 @@ ReclamacaoController.updateReclamacao = async (req, res) => {
         const userData = req.body
         await Reclamacao.findOneAndUpdate({ id: req.params.id}, userData)
         const result = await Reclamacao.findOne({ id: req.params.id })
-            //populate('covtest')
+        
         res.json(result)
     } catch (error) {
         console.log(error)
@@ -38,6 +38,21 @@ ReclamacaoController.getEstado = async (req, res) => {
     try {
         const result = await Reclamacao.findOne({ id: req.params.id })
         res.json(result)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+ReclamacaoController.listAllReclamacao = async (req, res) => {
+    try {
+        const encomendas = await Encomenda.find({user: req.params.id})
+        listaReclamacao = [];
+
+        for( let i = 0; i < encomendas.length; i++){
+            info = await Reclamacao.findOne({ _id: encomendas[i].reclamacao });
+            listaReclamacao.push(info);
+        }
+        res.json(listaReclamacao)
     } catch (err) {
         console.log(err)
     }

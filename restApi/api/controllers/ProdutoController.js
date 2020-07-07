@@ -11,15 +11,13 @@ ProdutoController.createProduto = async (req, res) => {
 
         const newData = {
             ...req.body,
+            vendedor: req.params.id
         }
 
         const produto = await Produto.create(newData)
+        const result = await Produto.findOne({_id: produto._id}).populate('vendedor')
+        res.json(result);
 
-        await User.findOneAndUpdate({_id: req.params.id, role: "COMERCIANTE"}, { $push: { produto: Produto._id}})
-
-        const info = await Produto.findOne({ _id: produto._id }).populate('utilizador', ['username', 'id', 'email'])
-
-        res.json(info);
     } catch (error) {
         console.log(error)
     }
@@ -28,9 +26,8 @@ ProdutoController.createProduto = async (req, res) => {
 ProdutoController.updateProduto = async (req, res) => {
     try {
         const userData = req.body
-        await Produto.findOneAndUpdate({ id: req.params.id}, userData)
-        const result = await Produto.findOne({ id: req.params.id })
-            //populate('covtest')
+        await Produto.findOneAndUpdate({ _id: req.params.id}, userData)
+        const result = await Produto.findOne({ _id: req.params.id }).populate('vendedor')
         res.json(result)
     } catch (error) {
         console.log(error)
@@ -48,12 +45,21 @@ ProdutoController.deleteProduto = async (req, res) => {
 
 ProdutoController.listProduto = async (req, res) => {
     try {
-        const list = await User.find({ role: "COMERCIANTE" })
-        const lista = await Produto.find().populate('user', ['username', 'id', 'email'])
+        const lista = await Produto.find().populate('vendedor')
         res.json(lista);
     } catch (error) {
         console.log(error)
     }
+}
+
+ProdutoController.listComercProduto  = async(req, res) =>{
+    try{
+        const lista = await Produto.find({vendedor: req.params.id})
+        res.json(lista)
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 module.exports = ProdutoController

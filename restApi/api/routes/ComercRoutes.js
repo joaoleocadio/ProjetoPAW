@@ -3,11 +3,6 @@ var router = express.Router();
 var Comerciante = require("../controllers/ComercController")
 const authorize = require('../middleware/authorize')
 
-//create Comerciante user -> Testado no Postman
-router.post('/create', function (req, res) {
-    Comerciante.createUserComerc(req, res)
-})
-
 //list all users in role Comerciante -> Testado no Postman
 router.get('/ComercianteList', function (req, res) {
     Comerciante.listUserComerc(req, res)

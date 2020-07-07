@@ -23,7 +23,7 @@ EncomendaController.createEncomenda = async (req, res) => {
     try {
 
         const targetUser = req.params.id
-        const randomId = uniqid.process('', '-encomenda')
+        const randomId = uniqid.process('')
         const newData = 
         {
             ...req.body,
@@ -39,7 +39,7 @@ EncomendaController.createEncomenda = async (req, res) => {
         //const result = await Encomenda.findOne({ _id: encomenda._id }).populate('user', ['username', 'id', 'email'])
         const result = await Encomenda.findOne({ _id: encomenda._id }).populate('produtos.produto').populate('user', ['username', 'id', 'email'])
 
-        console.log(result.produtos[0].produto.nome)
+        //console.log(result.produtos[0].produto.nome)
         let mailOptions = {
             to: result.user.email,
             subject: 'Encomenda',
