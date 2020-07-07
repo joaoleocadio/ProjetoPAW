@@ -18,8 +18,8 @@ adminController.updatePassword = async (req, res) => {
                 password: encryptedPass
             }
 
-            await User.findOneAndUpdate({ id: req.params.id, role: "ADMIN" }, newData);
-            const result = await User.find({ id: req.params.id, role: "ADMIN" })
+            await User.findOneAndUpdate({ _id: req.params.id, role: "ADMIN" }, newData);
+            const result = await User.find({ _id: req.params.id, role: "ADMIN" })
             res.json(result)
 
         }

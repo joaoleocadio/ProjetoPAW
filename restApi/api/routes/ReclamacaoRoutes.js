@@ -22,4 +22,8 @@ router.get('/consultarReclamacoes/:id', authorize(['CLIENTE', 'ADMIN', 'COMERCIA
     Reclamacao.listAllReclamacao(req, res)
 })
 
+router.get('/consultarReclamacoesComerciante/:id', authorize(['ADMIN', 'COMERCIANTE']), function (req, res) {
+    Reclamacao.listReclamacoesToComerciantes(req, res)
+})
+
 module.exports = router;

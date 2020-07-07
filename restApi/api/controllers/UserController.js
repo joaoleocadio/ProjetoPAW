@@ -79,7 +79,6 @@ UserController.deleteUser = async (req, res) => {
 UserController.listUser = async (req, res) => {
     try {
         const list = await User.find({ role: "CLIENTE" })
-            //populate('id', 'nome')
         res.json(list);
     } catch (err) {
         console.log(err)
@@ -98,9 +97,18 @@ UserController.updateUser = async (req, res) => {
             req.body.password = bcrypt.hashSync(req.body.password, 10);
         }
 
-        await User.findOneAndUpdate({ id: req.params.id, role: "CLIENTE" }, userData)
-        const result = await User.findOne({ id: req.params.id })
+        await User.findOneAndUpdate({ _id: req.params.id, role: "CLIENTE" }, userData)
+        const result = await User.findOne({ _id: req.params.id })
         res.json(result)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+UserController.listAllUsers = async (req, res) => {
+    try {
+        const list = await User.find()
+        res.json(list);
     } catch (err) {
         console.log(err)
     }

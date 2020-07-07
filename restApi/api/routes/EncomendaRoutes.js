@@ -14,9 +14,19 @@ router.get('/ListaEncomendas/:id', authorize(['ADMIN', 'COMERCIANTE', 'CLIENTE']
     Encomenda.listEncomendas(req, res)
 })
 
+//list all encomendas to Comerciantes -> NAO Testado no Postman
+router.get('/ListaEncomendasComerciantes/:id', authorize(['ADMIN', 'COMERCIANTE']),function (req, res) {
+    Encomenda.listEncomendasToComerciantes(req, res)
+})
+
 //Verificar estado da encomenda -> Testado no Postman
 router.get('/consultar/:id', authorize(['ADMIN', 'COMERCIANTE', 'CLIENTE']), function (req, res) {
     Encomenda.getEstado(req, res)
+})
+
+//Atualizar estado da encomenda -> NAO Testado no Postman
+router.put('/atualizarEncomenda/:id', authorize(['ADMIN', 'COMERCIANTE']), function (req, res) {
+    Encomenda.updateEstado(req, res);
 })
 
 module.exports = router;

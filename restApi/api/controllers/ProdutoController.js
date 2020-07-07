@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 const User = require('../models/produto')
 const Produto = require('../models/produto');
 const authorize = require('../middleware/authorize');
-const produto = require("../models/produto");
 
 var ProdutoController = {};
 
@@ -36,7 +35,7 @@ ProdutoController.updateProduto = async (req, res) => {
 
 ProdutoController.deleteProduto = async (req, res) => {
     try {
-        const produto = await Produto.findOneAndDelete({ id: req.params.id })
+        const produto = await Produto.findOneAndDelete({ _id: req.params.id })
         res.json(produto)
     } catch (err) {
         console.log(err)

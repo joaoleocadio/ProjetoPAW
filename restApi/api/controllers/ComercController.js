@@ -89,8 +89,8 @@ ComercController.updateUserComerc = async (req, res) => {
             req.body.password = bcrypt.hashSync(req.body.password, 10);
         }
 
-        await User.findOneAndUpdate({ id: req.params.id, role: "COMERCIANTE" }, userData)
-        const result = await User.findOne({ id: req.params.id })
+        await User.findOneAndUpdate({ _id: req.params.id, role: "COMERCIANTE" }, userData)
+        const result = await User.findOne({ _id: req.params.id })
         res.json(result)
     } catch (err) {
         console.log(err)

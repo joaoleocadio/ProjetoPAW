@@ -3,6 +3,7 @@ const User = require("../models/utilizador")
 const Encomenda = require("../models/encomenda")
 const authorize = require('../middleware/authorize')
 const nodemailer = require("nodemailer");
+const Produto = require('../models/produto');
 
 var EncomendaController = {};
 
@@ -24,7 +25,7 @@ EncomendaController.createEncomenda = async (req, res) => {
 
         const targetUser = req.params.id
         const randomId = uniqid.process('')
-        const newData = 
+        const newData =
         {
             ...req.body,
             id: randomId,
@@ -43,7 +44,7 @@ EncomendaController.createEncomenda = async (req, res) => {
         let mailOptions = {
             to: result.user.email,
             subject: 'Encomenda',
-            text: `A sua encomenda encontra-se a ser processada neste momento com o seguinte código - ${ encomenda.id }`
+            text: `A sua encomenda encontra-se a ser processada neste momento com o seguinte código - ${encomenda.id}`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -61,7 +62,23 @@ EncomendaController.createEncomenda = async (req, res) => {
 
 EncomendaController.listEncomendas = async (req, res) => {
     try {
-        const lista = await Encomenda.find({user: req.params.id}).populate('produtos.produto').populate('user', ['username', 'id', 'email'])
+        const lista = await Encomenda.find({ user: req.params.id }).populate('produtos.produto').populate('user', ['username', 'id', 'email'])
+        res.json(lista);
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+EncomendaController.listEncomendasToComerciantes = async (req, res) => {
+    try {
+        lista = [];
+        const encomendas = await Encomenda.find({});
+        for (let i = 0; i < encomendas.length; i++) {
+            const produto = await Produto.find({ _id: encomendas[i].produtos[0].produto }).populate('vendedor');
+            if(produto[0].vendedor._id == req.params.id){
+                lista.push(encomendas[i]);
+            }
+        }
         res.json(lista);
     } catch (err) {
         console.log(err)
@@ -71,6 +88,18 @@ EncomendaController.listEncomendas = async (req, res) => {
 EncomendaController.getEstado = async (req, res) => {
     try {
         const result = await Encomenda.findOne({ id: req.params.id })
+        res.json(result)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+EncomendaController.updateEstado = async (req, res) => {
+    try {
+        const encomendaData = req.body
+
+        await Encomenda.findOneAndUpdate({ _id: req.params.id}, encomendaData)
+        const result = await Encomenda.findOne({ _id: req.params.id })
         res.json(result)
     } catch (err) {
         console.log(err)
